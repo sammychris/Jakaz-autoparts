@@ -2,7 +2,7 @@
 require('dotenv').config();
 const multer  = require('multer');
 const path    = require('path');
-const Project = require('../model/Portfolio');
+const Project = require('../models/Portfolio');
 
 
 const storage = multer.diskStorage({

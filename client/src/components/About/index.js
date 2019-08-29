@@ -1,3 +1,3 @@
-import Navigation from './Navigation';
+import About from './About';
 
-export default Navigation;
+export default About;

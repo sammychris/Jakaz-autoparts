@@ -12,6 +12,7 @@ class Navigation extends React.Component {
 				<ul>
 					<li>Search Inventory</li>
 					<li>Map & Direction</li>
+					<li>Contact Us</li>
 				</ul>
 			</div>
 		)

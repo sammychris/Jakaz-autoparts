@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Navigation, Banner, About } from '../components';
+import { Header, Navigation, Banner, About, Footer } from '../components';
 
 
 class HomePage extends React.Component {
@@ -18,6 +18,10 @@ class HomePage extends React.Component {
 						In Need of Any Car Parts? Please Call Us to Get Prices!
 					</div>
 					<About />
+					<div id="btm-call">
+						We are proud of our works.
+					</div>
+					<Footer />
 				</div>
 			</div>
 		)

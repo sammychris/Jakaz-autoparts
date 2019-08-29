@@ -9,6 +9,10 @@ class Navigation extends React.Component {
 	render() {
 		return (
 			<div className="navigation">
+				<ul>
+					<li>Search Inventory</li>
+					<li>Map & Direction</li>
+				</ul>
 			</div>
 		)
 	}

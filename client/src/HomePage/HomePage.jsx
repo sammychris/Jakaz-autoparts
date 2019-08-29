@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Navigation } from '../components';
+import { Header, Navigation, Banner, About } from '../components';
 
 
 class HomePage extends React.Component {
@@ -12,6 +12,13 @@ class HomePage extends React.Component {
 			<div className="container">
 				<Header />
 				<Navigation />
+				<div className="container">
+					<Banner />
+					<div id="mid-call">
+						In Need of Any Car Parts? Please Call Us to Get Prices!
+					</div>
+					<About />
+				</div>
 			</div>
 		)
 	}

@@ -1,3 +1,16 @@
+@mixin manage_icons {
+	width: 100%;
+	display: flex;
+	i {
+		font-size: 30px;
+		color: #d11e1e;
+		width: 20%;
+	}
+	div {
+		width: 80%;
+	}
+}
+
 .footer {
 	background: #181818;
 	color: #fff;
@@ -18,18 +31,18 @@
 				width: 30%;
 				display: flex;
 				justify-content: center;
+
 				.address {
-
-
+					.icons { @include manage_icons }
 				}
 				.foot-navigation {
-
-					width: 40%;
+					width: 80%;
+					.icons { @include manage_icons }
 				}
 
 				.social {
-
-					width: 30%;
+					width: 70%;
+					.icons{ @include manage_icons }
 					h3 {
 						margin: 0;
 					}

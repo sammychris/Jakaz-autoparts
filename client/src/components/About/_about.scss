@@ -1,0 +1,49 @@
+.about {
+	width: 80%;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px 20px 50px;
+
+	.about-us {
+		h1 {
+			text-align: center;
+			font-size: 40px;
+			padding: 60px 0 10px;
+			color: #4d4d4d;
+		}
+
+		.about-writeup {
+			padding: 0px 0 100px;
+
+			p {
+				line-height: 1.5em;
+				color: #262626;
+			}
+
+			h3 {
+				text-align: center;
+		    color: #d11e1e;
+		    padding: 20px 0 0;
+			}
+		}
+	}
+
+	.slider {
+		#title {
+		  text-align: center;
+	    color: #00000091;
+	    font-size: 24px;
+	    padding:50px 0;
+		}
+		img {
+			height: 300px;
+			width: 33%;
+			cursor: pointer;
+		}
+
+		img:hover {
+			background: #eee;
+			padding: 4px;
+		}
+	}
+}

@@ -1,0 +1,47 @@
+.footer {
+	background: #181818;
+	color: #fff;
+	line-height: 2em;
+
+	.container {
+		width: 80%;
+		max-width: 1000px;
+		padding: 0 20px;
+		margin: auto;
+
+		.footer-cont {
+			padding: 50px 0;
+			display: flex;
+			justify-content: space-between;
+
+			.holder {
+				width: 30%;
+				display: flex;
+				justify-content: center;
+				.address {
+
+
+				}
+				.foot-navigation {
+
+					width: 40%;
+				}
+
+				.social {
+
+					width: 30%;
+					h3 {
+						margin: 0;
+					}
+				}
+			}
+		}
+
+		p {
+			margin: 0px;
+			padding: 10px 0;
+			font-weight: bold;
+		}
+	}
+}
+

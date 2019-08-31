@@ -1,0 +1,60 @@
+
+.hero {
+	background-image: url("https://cdn.wallpapersafari.com/21/94/NMFYru.jpg") ;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100vh;
+	text-align: center;
+}
+
+.top-call {
+	width: 80%;
+	margin: auto;
+	height: 80%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+
+		#srchBtn {
+			background: #d11e1e;
+	    border: 0px solid;
+	    padding: 20px;
+	    font-size: 30px;
+	    cursor: pointer;
+	    color: #fff;
+		}
+
+		a {
+			padding: 40px;
+		}
+
+		.wrnty {
+			font-family: sans-serif;
+			padding: 20px;
+			font-size: 50px;
+			font-style: italic;
+			font-weight: bold;
+			box-shadow: 0 0 20px 12px black;
+
+			#day {
+				color: #2164f3;
+				font-size: 90px;
+				font-weight: bolder;
+				padding: 10px;
+			}
+
+			#warranty {
+				color: #fff;
+			}
+		}
+}
+
+
+.mid-call {
+	background: #ffffff9e;
+  color: #080808;
+	width: 80%;
+	margin: auto;
+}

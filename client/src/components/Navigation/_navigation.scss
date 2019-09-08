@@ -8,6 +8,7 @@
 
 	ul {
 		margin: 0;
+		padding: 0;
 		list-style: none;
 		display: flex;
 
@@ -19,6 +20,26 @@
 		li:hover {
 			background: #000;
 			color: #fff;
+		}
+	}
+}
+
+@media(max-width: 900px) {
+
+}
+
+
+
+@media(max-width: 700px) {
+	.navigation {
+		ul {
+			padding: 20px 0;
+			flex-direction: column;
+			align-items: center;
+
+			li {
+				padding: 20px 50px;
+			}
 		}
 	}
 }

@@ -58,3 +58,33 @@
 	}
 }
 
+
+@media(max-width: 900px) {
+}
+
+@media(max-width: 700px) {
+	.footer {
+		.container {
+			.footer-cont {
+				padding: 50px 0;
+				display: block;
+
+				.holder {
+					width: 100%;
+					display: block;
+					padding: 30px 0;
+
+					.address {
+					}
+					.foot-navigation {
+						width: 100%;
+					}
+
+					.social {
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
+}

@@ -11,14 +11,12 @@ class Header extends React.Component {
 			<div className="header">
 				<div className="header-content">
 					<div className="logo">
-						<div>Logo</div>
-						<h1>Jakazautoparts</h1>
-						<span>Symbol of Quality</span>
+						<img src="/images/logo.png"/>
 					</div>
 					<div className="container">
 						<div className="address">
-							<div>Block G 75-76 Tundas International <br/> Market Bakasi Ladipo,</div>
-							<div>(OSHODI, LAGOS)</div>
+							<div>Block G 75-76 Tundas<br/>International Market Bakasi</div>
+							<div>Ladipo (OSHODI, LAGOS)</div>
 						</div>
 						<div className="contact">
 							<div><span>Phone:</span> +2349026586217</div>

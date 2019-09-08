@@ -1,6 +1,6 @@
 
 .hero {
-	background-image: url("https://cdn.wallpapersafari.com/21/94/NMFYru.jpg") ;
+	background-image: url("/images/banner1.jpg") ;
 	background-repeat: no-repeat;
 	background-size: cover;
 	height: 100vh;
@@ -19,11 +19,11 @@
 
 		#srchBtn {
 			background: #d11e1e;
-	    border: 0px solid;
-	    padding: 20px;
-	    font-size: 30px;
-	    cursor: pointer;
-	    color: #fff;
+		    border: 0px solid;
+		    padding: 20px;
+		    font-size: 30px;
+		    cursor: pointer;
+		    color: #fff;
 		}
 
 		a {
@@ -53,8 +53,41 @@
 
 
 .mid-call {
-	background: #ffffff9e;
-  color: #080808;
+	background: rgba(255, 255, 255, 0.81);
+  	color: #080808;
 	width: 80%;
 	margin: auto;
+}
+
+
+
+
+
+
+
+@media(max-width: 900px) {
+
+}
+
+
+
+@media(max-width: 700px) {
+	.top-call {
+		height: unset;
+
+		.wrnty {
+			font-size: 40px;
+
+			#day {
+				font-size: unset;
+			}
+
+			#warranty {
+				color: #fff;
+			}
+		}
+	}
+	.mid-call {
+		font-size: 15px;
+	}
 }

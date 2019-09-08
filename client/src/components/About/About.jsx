@@ -23,7 +23,7 @@ class About extends React.Component {
 						<p>
 							We do our best to provide fast and friendly service, to you our loyal customers.
 						</p>
-						<h3>Thanks for choosing Jakaz</h3>
+						<p id="foot">Thanks for choosing Jakaz.</p>
 					</div>
 				</div>
 				<div className="slider">

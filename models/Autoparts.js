@@ -35,13 +35,13 @@ Parts.getPartById = function (partId, result) {
 };
 
 Parts.getAllParts = function (result) {
-    db.query("Select * from autoparts", function (err, res) {
+    db.query("SELECT * FROM autoparts RIGHT JOIN image ON autoparts.id = image.part_fk", function (err, res) {
         if(err) {
             console.log("error: ", err);
             result(null, err);
         }
         else{
-        	console.log('parts : ', res);  
+        	//console.log('parts : ', res);  
         	result(null, res);
         }
     });   

@@ -19,7 +19,7 @@ Images.uploadNewImages = function (images, result) {
     });           
 };
 
-Images.getImagesByPartId = function (partId, result) {
+Images.getByFK = function (partId, result) {
     db.query("Select * from image where part_fk = ? ", partId, function (err, res) {             
         if(err) {
             console.log("error: ", err);

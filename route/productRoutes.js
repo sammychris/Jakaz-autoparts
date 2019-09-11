@@ -2,7 +2,7 @@
 require('dotenv').config();
 const multer  = require('multer');
 const path    = require('path');
-const Autoparts = require('../models/Autoparts');
+const Product = require('../models/Product');
 const Image = require('../models/AutopartImages');
 
 
@@ -20,9 +20,9 @@ const upload = multer({ storage }).array('photos');
 
 module.exports = function (app) {
 
-app.route('/api/part')
+app.route('/api/product')
 	.post(upload, (req, res) => {
-	  	const new_part = new Autoparts(req.body);
+	  	const new_part = new Product(req.body);
 	  	const { part_fk } = req.body;
 	  	const { files }  = req;
 
@@ -37,7 +37,7 @@ app.route('/api/part')
 	  		return res.status(400).send({ error:true, message: 'Please provide a photo'})
 	  	}
 		  
-	  	Autoparts.uploadNewPart(new_part, (err, output) => {
+	  	Product.uploadNewPart(new_part, (err, output) => {
 		    if (err) return res.send(err);
 		    req.files.forEach( each => {
 				const { filename } = each;
@@ -51,29 +51,29 @@ app.route('/api/part')
 
 	.get((req, res) => {
 		
-		Autoparts.getAllParts((err, result) => {
+		Product.getAllParts((err, result) => {
 			res.json(result);
 		})    
 	});
 
 
-app.route('/api/part/:id')
+app.route('/api/product/:id')
 	.get((req, res) => {
-		Autoparts.getPartById(req.params.id, (err, result) => {
+		Product.getPartById(req.params.id, (err, result) => {
 			if (err) return res.send(err);
 			return res.json(result)
 		});
 	})
 
 	.put((req, res) => {
-		Autoparts.updateById(req.params.id, new Autoparts(req.body), (err, result) => {
+		Product.updateById(req.params.id, new Product(req.body), (err, result) => {
 			if (err) return res.send(err);
 			return res.json(result)
 		});
 	})
 
 	.delete((req, res) => {
-		Autoparts.remove(req.params.id, (err, result) => {
+		Product.remove(req.params.id, (err, result) => {
 			if (err) return res.send(err);
 			return res.json(result)
 		});

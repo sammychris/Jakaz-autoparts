@@ -23,7 +23,7 @@ Parts.uploadNewPart = function (newPart, result) {
 };
 
 Parts.getPartById = function (partId, result) {
-    db.query("Select * from autoparts where id = ? ", partId, function (err, res) {             
+    db.query("Select * from autoparts, image where autoparts.id = image.part_fk and image.part_fk = ? ", partId, function (err, res) {             
         if(err) {
             console.log("error: ", err);
             result(err, null);
@@ -35,7 +35,7 @@ Parts.getPartById = function (partId, result) {
 };
 
 Parts.getAllParts = function (result) {
-    db.query("SELECT * FROM autoparts RIGHT JOIN image ON autoparts.id = image.part_fk", function (err, res) {
+    db.query("SELECT * FROM autoparts LEFT JOIN image ON autoparts.id = image.part_fk", function (err, res) {
         if(err) {
             console.log("error: ", err);
             result(null, err);

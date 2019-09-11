@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 class Header extends React.Component {
@@ -10,9 +11,9 @@ class Header extends React.Component {
 		return (
 			<div className="header">
 				<div className="header-content">
-					<div className="logo">
+					<Link to="/" className="logo">
 						<img src="/images/logo.png"/>
-					</div>
+					</Link>
 					<div className="container">
 						<div className="address">
 							<div>Block G 75-76 Tundas<br/>International Market Bakasi</div>

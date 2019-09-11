@@ -12,6 +12,8 @@
     "react-dom": "^16.8.6",
     "react-image-gallery": "^0.9.1",
     "react-responsive-carousel-v2": "^3.2.0",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1"
   },
   "scripts": {

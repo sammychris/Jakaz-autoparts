@@ -10,20 +10,14 @@ class HomePage extends React.Component {
 	render() {
 		return (
 			<div className="container">
-				<Header />
-				<Navigation />
-				<div className="container">
-					<Banner />
-					<About />
-					<div id="btm-call">
-						We are proud of our works.
-					</div>
-					<Footer />
+				<Banner />
+				<About />
+				<div id="btm-call">
+					We are proud of our works.
 				</div>
 			</div>
 		)
 	}
-
 }
 
 export default HomePage;

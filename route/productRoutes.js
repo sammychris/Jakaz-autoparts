@@ -18,30 +18,47 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage }).array('photos');
 
+// To generate Id for new product
+const generateId = (index) => {
+	let new_id = '', key = 'abcdef';
+	for (let i = 0; i < index; i++) {
+		const r = Math.floor(Math.random() * 9) + 1;
+		if (r === 1 || r === 3) new_id += key[Math.floor(Math.random()*key.length)];
+		new_id += r;
+	}
+	return new_id;
+}
+
+
+
 module.exports = function (app) {
 
 app.route('/api/product')
 	.post(upload, (req, res) => {
-	  	const new_part = new Product(req.body);
-	  	const { part_fk } = req.body;
+	  	const new_product = new Product(req.body);
 	  	const { files }  = req;
+	  	const product_id = generateId(25); // assign id
 
-	  	//handles null error 
+	  	// handles null error 
 	  	for( let key in new_part ) {
 	  		if (!new_part[key]){
 	  			return res.status(400).send({ error:true, message: 'Please provide '+key });
 	  		}
 	  	}
+
 	  	// handles null error for photo
-	  	if (!files.length || !part_fk) {
+	  	if (!files.length) {
 	  		return res.status(400).send({ error:true, message: 'Please provide a photo'})
 	  	}
-		  
-	  	Product.uploadNewPart(new_part, (err, output) => {
+
+		// assign new product an id... 
+	  	new_product.id = product_id;
+
+	  	Product.uploadNewPart(new_product, (err, output) => {
 		    if (err) return res.send(err);
-		    req.files.forEach( each => {
+		    files.forEach( each => {
 				const { filename } = each;
-				Image.uploadNewImages({ filename, part_fk }, (err, result) => {
+				Image.uploadNewImages({ filename, product_id }, (err, result) => {
 					if (err) return res.send(err);
 					return res.json(result);
 				});
@@ -50,16 +67,17 @@ app.route('/api/product')
 	})
 
 	.get((req, res) => {
-		
-		Product.getAllParts((err, result) => {
-			res.json(result);
-		})    
+		console.log("This is amazing");
+		res.send("This is cool")
+		// Product.getAll((err, result) => {
+		// 	res.json(result);
+		// })    
 	});
 
 
 app.route('/api/product/:id')
 	.get((req, res) => {
-		Product.getPartById(req.params.id, (err, result) => {
+		Product.getById(req.params.id, (err, result) => {
 			if (err) return res.send(err);
 			return res.json(result)
 		});

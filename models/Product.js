@@ -1,16 +1,16 @@
 const db = require('./db');
 
 //Task object constructor
-var Product = function(parts){
-    this.make = parts.make;
-    this.model = parts.model;
-    this.year = parts.year;
-    this.part = parts.part;
-    this.description = parts.description;
+var Product = function(product){
+    this.make = product.make;
+    this.model = product.model;
+    this.year = product.year;
+    this.part = product.part;
+    this.description = product.description;
 };
 
-Product.createProduct = function (newPart, result) {    
-    db.query("INSERT INTO products set ?", newPart, function (err, res) {    
+Product.createProduct = function (newProduct, result) {    
+    db.query("INSERT INTO products set ?", newProduct, function (err, res) {    
         if(err) {
             console.log("error: ", err);
             result(err, null);
@@ -22,8 +22,8 @@ Product.createProduct = function (newPart, result) {
     });           
 };
 
-Product.getPartById = function (partId, result) {
-    db.query("Select * from products, photos where products.id = photos.product_id and photos.product_id = ? ", partId, function (err, res) {             
+Product.getById = function (productId, result) {
+    db.query("Select * from products, photos where products.id = photos.product_id and photos.product_id = ? ", productId, function (err, res) {             
         if(err) {
             console.log("error: ", err);
             result(err, null);
@@ -34,21 +34,21 @@ Product.getPartById = function (partId, result) {
     });   
 };
 
-Product.getAllProduct = function (result) {
+Product.getAll = function (result) {
     db.query("SELECT * FROM products LEFT JOIN photos ON products.id = photos.product_id", function (err, res) {
         if(err) {
             console.log("error: ", err);
             result(null, err);
         }
         else{
-            //console.log('parts : ', res);  
+            //console.log('product : ', res);  
             result(null, res);
         }
     });   
 };
 
-Parts.updateById = function(id, part, result){
-    db.query("UPDATE products SET ? WHERE id = ?", [part, id], function (err, res) {
+Product.updateById = function(id, product, result){
+    db.query("UPDATE products SET ? WHERE id = ?", [product, id], function (err, res) {
         if(err) {
             console.log("error: ", err);
             result(null, err);

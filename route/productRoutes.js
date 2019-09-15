@@ -3,7 +3,7 @@ require('dotenv').config();
 const multer  = require('multer');
 const path    = require('path');
 const Product = require('../models/Product');
-const Image = require('../models/AutopartImages');
+const Photos = require('../models/ProductPhotos');
 
 
 const storage = multer.diskStorage({
@@ -22,9 +22,9 @@ const upload = multer({ storage }).array('photos');
 const generateId = (index) => {
 	let new_id = '', key = 'abcdef';
 	for (let i = 0; i < index; i++) {
-		const r = Math.floor(Math.random() * 9) + 1;
-		if (r === 1 || r === 3) new_id += key[Math.floor(Math.random()*key.length)];
-		new_id += r;
+		const r = Math.floor(Math.random() * 15);
+		if (r > 9) new_id += key[Math.floor(Math.random()*key.length)];
+		else new_id += r;
 	}
 	return new_id;
 }
@@ -33,92 +33,90 @@ const generateId = (index) => {
 
 module.exports = function (app) {
 
-app.route('/api/product')
-	.post(upload, (req, res) => {
-	  	const new_product = new Product(req.body);
-	  	const { files }  = req;
-	  	const product_id = generateId(25); // assign id
+	app.route('/api/product')
+		.post(upload, (req, res) => {
+		 	const new_product = new Product(req.body);
+		  	const { files }  = req;
+		 	const product_id = generateId(25); // assign id
 
-	  	// handles null error 
-	  	for( let key in new_part ) {
-	  		if (!new_part[key]){
-	  			return res.status(400).send({ error:true, message: 'Please provide '+key });
-	  		}
-	  	}
+		  	// handles null error 
+		  	for( let key in new_product ) {
+		  		if (!new_product[key]){
+		  			return res.status(400).json({ error:true, message: 'Please provide '+key });
+		  		}
+		  	}
 
-	  	// handles null error for photo
-	  	if (!files.length) {
-	  		return res.status(400).send({ error:true, message: 'Please provide a photo'})
-	  	}
-
-		// assign new product an id... 
-	  	new_product.id = product_id;
-
-	  	Product.uploadNewPart(new_product, (err, output) => {
-		    if (err) return res.send(err);
-		    files.forEach( each => {
-				const { filename } = each;
-				Image.uploadNewImages({ filename, product_id }, (err, result) => {
+		  	// handles null error for photo
+		  	if (!files.length) {
+		  		return res.status(400).json({ error:true, message: 'Please provide a photo'})
+		  	}
+		  	// assign new product an id... 
+		  	new_product.id = product_id;
+		  	// assign sample photo to first input file
+		  	new_product.sample_photo = files[0].filename;
+		  	// map through files 
+		 	const uploads = files.map(a => [a.filename, product_id]);
+			
+		  	Product.createProduct(new_product, (err, output) => {
+			    if (err) return res.send(err);
+				Photos.upload(uploads, (err, result) => {
 					if (err) return res.send(err);
-					return res.json(result);
+					return res.json({ message: "Product uploaded successful!" });
 				});
 			});
-		  });
-	})
+		})
 
-	.get((req, res) => {
-		console.log("This is amazing");
-		res.send("This is cool")
-		// Product.getAll((err, result) => {
-		// 	res.json(result);
-		// })    
-	});
-
-
-app.route('/api/product/:id')
-	.get((req, res) => {
-		Product.getById(req.params.id, (err, result) => {
-			if (err) return res.send(err);
-			return res.json(result)
+		.get((req, res) => {
+			Product.getAll((err, result) => {
+				res.json(result);
+			})    
 		});
-	})
 
-	.put((req, res) => {
-		Product.updateById(req.params.id, new Product(req.body), (err, result) => {
-			if (err) return res.send(err);
-			return res.json(result)
-		});
-	})
 
-	.delete((req, res) => {
-		Product.remove(req.params.id, (err, result) => {
-			if (err) return res.send(err);
-			return res.json(result)
-		});
-	})
-	// app.route('/api/project')
-	// 	.post(upload.single('img_url'), (req, res) => {
-	// 		let { name, description, code_url, demo_url, type, skills, item } = req.body;
-	// 		//skills = [ ...skills, ...item.split(',')];
+	app.route('/api/product/:id')
+		.get((req, res) => {
+			Product.getById(req.params.id, (err, result) => {
+				if (err) return res.send(err);
+				return res.json(result)
+			});
+		})
 
-	// 		let pro = new Project({
-	// 			name,
-	// 			description,
-	// 			code_url,
-	// 			demo_url,
-	// 			type,
-	// 			skills,
-	// 		})
-	// 		pro.img_url = `http://${req.headers.host}/uploads/${req.file.filename}`;
-	// 		pro.save()
-	// 			.then(project => res.redirect('/page'))
-	// 			.catch(err => res.status(401).json({ err }));
-	// 	})
+		.put((req, res) => {
+			Product.updateById(req.params.id, new Product(req.body), (err, result) => {
+				if (err) return res.send(err);
+				return res.json(result)
+			});
+		})
 
-	// 	.get(function (req, res) {
-	// 		Project.find({})
-	// 			.then(project => res.json({ project }))
-	// 			.catch(err => res.status(400).json({ err }));
-	// 	})
+		.delete((req, res) => {
+			Product.remove(req.params.id, (err, result) => {
+				if (err) return res.send(err);
+				return res.json(result)
+			});
+		})
+		// app.route('/api/project')
+		// 	.post(upload.single('img_url'), (req, res) => {
+		// 		let { name, description, code_url, demo_url, type, skills, item } = req.body;
+		// 		//skills = [ ...skills, ...item.split(',')];
+
+		// 		let pro = new Project({
+		// 			name,
+		// 			description,
+		// 			code_url,
+		// 			demo_url,
+		// 			type,
+		// 			skills,
+		// 		})
+		// 		pro.img_url = `http://${req.headers.host}/uploads/${req.file.filename}`;
+		// 		pro.save()
+		// 			.then(project => res.redirect('/page'))
+		// 			.catch(err => res.status(401).json({ err }));
+		// 	})
+
+		// 	.get(function (req, res) {
+		// 		Project.find({})
+		// 			.then(project => res.json({ project }))
+		// 			.catch(err => res.status(400).json({ err }));
+		// 	})
 
 }

@@ -3,7 +3,8 @@ require('dotenv').config();
 const multer  = require('multer');
 const path    = require('path');
 const Product = require('../models/Product');
-const Photos = require('../models/ProductPhotos');
+const Photos = require('../models/Photos');
+const Category = require('../models/Category');
 
 
 const storage = multer.diskStorage({
@@ -35,63 +36,91 @@ module.exports = function (app) {
 
 	app.route('/api/product')
 		.post(upload, (req, res) => {
-		 	const new_product = new Product(req.body);
+			const category = {};
+		 	const new_prod = new Product(req.body);
 		  	const { files }  = req;
-		 	const product_id = generateId(25); // assign id
 
-		  	// handles null error 
-		  	for( let key in new_product ) {
-		  		if (!new_product[key]){
-		  			return res.status(400).json({ error:true, message: 'Please provide '+key });
-		  		}
-		  	}
+		  	// // handles null error 
+		  	// for( let key in new_prod ) {
+		  	// 	if (!new_prod[key]){
+		  	// 		return res.status(400).json({ error:true, message: 'Please provide '+key });
+		  	// 	}
+		  	// }
 
-		  	// handles null error for photo
-		  	if (!files.length) {
-		  		return res.status(400).json({ error:true, message: 'Please provide a photo'})
-		  	}
+		  	// // handles null error for photo
+		  	// if (!files.length) {
+		  	// 	return res.status(400).json({ error:true, message: 'Please provide a photo'})
+		  	// }
 		  	// assign new product an id... 
-		  	new_product.id = product_id;
-		  	// assign sample photo to first input file
-		  	new_product.sample_photo = files[0].filename;
+		  	const { make, model, year, name } = new_prod;
+		  	const product_id = `${make}-${model}-${name}-${generateId(5)}`; // assign id
+		  	new_prod.id = product_id;
+		  	new_prod.sample_photo = files[0].filename;
+		  	new_prod.data = `${make} ${model} ${year} ${name}`;
+
+		  	// push the name nd photo to category
+		  	category.name = name;
+		  	category.photo = new_prod.sample_photo;
+
 		  	// map through files 
-		 	const uploads = files.map(a => [a.filename, product_id]);
-			
-		  	Product.createProduct(new_product, (err, output) => {
+		 	const uploads = files.map(a => [a.filename, product_id]); 
+
+		  	Product.createProduct(new_prod, (err, output) => {
 			    if (err) return res.send(err);
 				Photos.upload(uploads, (err, result) => {
 					if (err) return res.send(err);
-					return res.json({ message: "Product uploaded successful!" });
+					Category.createCategory(category, (err, cat) =>{
+						if (err) return res.send(err);
+						return res.json({ message: "Product uploaded successful!" });
+					})
 				});
 			});
 		})
 
 		.get((req, res) => {
-			Product.getAll((err, result) => {
-				res.json(result);
+			Product.getAll(req.query.name, (err, product) => {
+				if (err) return res.send(err);
+				res.json(product);
 			})    
 		});
-
+	app.route('/api/product/cat')
+		.get((req, res) =>{
+			Category.getAll((err, categories) => {
+				if (err) return res.send(err);
+				res.json(categories);
+			})
+		});
+	app.route('/api/product/search')
+		.get((req, res) =>{
+			Product.search(req.query.data, (err, product) => {
+				if (err) return res.send(err);
+				res.json(product);
+			})
+		});
 
 	app.route('/api/product/:id')
 		.get((req, res) => {
-			Product.getById(req.params.id, (err, result) => {
+			Product.getById(req.params.id, (err, product) => {
 				if (err) return res.send(err);
-				return res.json(result)
+				product = product[0];
+				Photos.getByProductId(req.params.id, (error, photos) => {
+					if (error)  return res.send(error);
+					return res.json({product, photos});
+				})
 			});
 		})
 
 		.put((req, res) => {
-			Product.updateById(req.params.id, new Product(req.body), (err, result) => {
+			Product.updateById(req.params.id, new Product(req.body), (err, product) => {
 				if (err) return res.send(err);
-				return res.json(result)
+				return res.json(product)
 			});
 		})
 
 		.delete((req, res) => {
-			Product.remove(req.params.id, (err, result) => {
+			Product.remove(req.params.id, (err, product) => {
 				if (err) return res.send(err);
-				return res.json(result)
+				return res.json(product)
 			});
 		})
 		// app.route('/api/project')

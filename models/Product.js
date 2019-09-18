@@ -5,8 +5,7 @@ var Product = function(product){
     this.make = product.make;
     this.model = product.model;
     this.year = product.year;
-    this.part = product.part;
-    this.description = product.description;
+    this.name = product.name;
 };
 
 Product.createProduct = function (newProduct, result) {    
@@ -22,26 +21,43 @@ Product.createProduct = function (newProduct, result) {
     });           
 };
 
-Product.getById = function (productId, result) {
-    db.query("Select * from products, photos where products.id = photos.product_id and photos.product_id = ? ", productId, function (err, res) {             
-        if(err) {
-            console.log("error: ", err);
-            result(err, null);
-        }
-        else{
-            result(null, res);
-        }
-    });   
-};
+Product.getAll = function (name, result) {
+    const sql = name
+        ? "select * from `products` where `name` like '%"+name+"%'"
+        : "SELECT * FROM products";
 
-Product.getAll = function (result) {
-    db.query("SELECT * FROM products LEFT JOIN photos ON products.id = photos.product_id", function (err, res) {
+    db.query(sql, function (err, res) {
         if(err) {
             console.log("error: ", err);
             result(null, err);
         }
         else{
             //console.log('product : ', res);  
+            result(null, res);
+        }
+    });   
+};
+
+Product.search = function (search, result) {
+    db.query("select * from `products` where `data` like '%"+search+"%'", function (err, res) {
+        if(err) {
+            console.log("error: ", err);
+            result(null, err);
+        }
+        else{
+            //console.log('product : ', res);  
+            result(null, res);
+        }
+    });   
+};
+
+Product.getById = function (productId, result) {
+    db.query("Select * from products where id = ? ", productId, function (err, res) {             
+        if(err) {
+            console.log("error: ", err);
+            result(err, null);
+        }
+        else{
             result(null, res);
         }
     });   

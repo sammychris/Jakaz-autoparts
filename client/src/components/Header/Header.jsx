@@ -11,8 +11,13 @@ class Header extends React.Component {
 		return (
 			<div className="header">
 				<div className="header-content">
-					<Link to="/" className="logo">
-						<img src="/images/logo.png"/>
+					<Link to="/" className="logo" style={{ display: 'flex' }}>
+						<div style={{ paddingRight: '20px'}}>
+							<img src="/images/logo.png"/>
+						</div>
+						<div>
+							<img src="/images/brand.png"/>
+						</div>
 					</Link>
 					<div className="container">
 						<div className="address">

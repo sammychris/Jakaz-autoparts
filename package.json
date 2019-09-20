@@ -10,10 +10,9 @@
     "start": "cross-env NODE_ENV=production node server.js",
     "server": "nodemon server.js",
     "client": "cd client && npm start",
-    "dev": "concurrently \"npm run start\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
-    "connect-history-api-fallback": "^1.6.0",
     "cross-env": "^5.2.1",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",

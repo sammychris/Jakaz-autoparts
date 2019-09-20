@@ -5,6 +5,7 @@ var Product = function(product){
     this.make = product.make;
     this.model = product.model;
     this.year = product.year;
+    this.category_id = product.category_id;
     this.name = product.name;
 };
 
@@ -21,9 +22,9 @@ Product.createProduct = function (newProduct, result) {
     });           
 };
 
-Product.getAll = function (name, result) {
-    const sql = name
-        ? "select * from `products` where `name` like '%"+name+"%'"
+Product.getAll = function (cat_id, result) {
+    const sql = cat_id
+        ? "select * from `products` where `category_id` = '"+cat_id+"'"
         : "SELECT * FROM products";
 
     db.query(sql, function (err, res) {

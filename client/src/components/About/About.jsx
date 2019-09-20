@@ -1,12 +1,48 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 class About extends React.Component {
 	constructor(props) {
 		super(props)
+		this.state = {
+			items: [],
+		}
+		this.ListItems = this.ListItems.bind(this);
+		this.handle_Id = this.handle_Id.bind(this);
+	}
+
+	componentDidMount() {
+		fetch('/api/product/category')
+			.then(res => res.json())
+			.then(res => {
+				this.setState({
+					items: res,
+				});
+			});
+	}
+
+	handle_Id(id) {
+		return () => localStorage.category_id = id;
+	}
+
+	ListItems(items) {
+		return items.map(each => {
+			const { name, photo, id } = each;
+			const url = name.replace(/\s/g, '-');
+			return (
+				<li>
+					<Link to={'/parts/'+url} onClick={this.handle_Id(id)}>
+						<img src={'/uploads/'+photo} />
+						<span>{name}</span>
+					</Link>
+				</li>
+			);
+		})
 	}
 
 	render() {
+		const { items } = this.state;
 		return (
 			<div className="about">
 				<div className="about-us">
@@ -26,18 +62,15 @@ class About extends React.Component {
 						<p id="foot">Thanks for choosing Jakaz.</p>
 					</div>
 				</div>
-				<div className="slider">
+				<div className="items">
 					<div id="title">We have any part of any Vehicle</div>
-					<div className="first">
-						<img src="https://img-new.cgtrader.com/items/311842/570494614a/photorealistic-car-tire-3d-model-max-obj-fbx.jpg"/>
-						<img src="https://www.goodyear.com/images/tireImages/goodyear/media/Ultra_Grip_Ice_WRT_CT_Side_2179.jpg"/>
-						<img src="https://cdn.shopify.com/s/files/1/0152/0585/products/FA142_FA812_Front_1024x1024.jpg?v=1527514008"/>
-					</div>
-					<div className="second">
-						<img src="https://cdn.shopify.com/s/files/1/0699/6735/products/JET_f31b6c3e-c488-45c0-b990-5c86c62470fa_x700.png?v=1547058005" />
-						<img src="https://cdn.shopify.com/s/files/1/0699/6735/products/Drifting_33_blue_7db8b2bf-ca9a-4a49-87ea-8ae39e7090c7_x700.png?v=1547058042" />
-						<img src="https://blog.automart.co.za/wp-content/uploads/2016/04/corvette-engine.jpg" />
-					</div>
+					<ul>
+						{ items[0] && this.ListItems(items) }
+						<div className="seemore-container">
+							<a href="/parts" className="seemore-container_link">See All Parts</a>
+						</div>
+					</ul>
+
 				</div>
 			</div>
 		)

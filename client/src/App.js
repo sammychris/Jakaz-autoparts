@@ -6,6 +6,8 @@ import { ListProductPage } from './ListProductPage';
 import { ProductPage } from './ProductPage';
 import { Notfound } from './Notfound';
 import { AdminPage } from './AdminPage';
+import { MapDirection } from './MapDirection';
+
 import { Header, Navigation, Footer } from './components';
 
 class App extends React.Component {
@@ -21,9 +23,11 @@ class App extends React.Component {
           <Navigation />
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route path="/auto-part" component={ListProductPage} />
-            <Route path="/auto" component={ProductPage} />
+            <Route exact path="/parts" component={ListProductPage} />
+            <Route exact path="/parts/:pname" component={ListProductPage} />
+            <Route path="/parts/:pname/:partid" component={ProductPage} />
             <Route path="/productmanager" component={AdminPage} />
+            <Route path="/Map&direction" component={MapDirection} />
             <Route component={Notfound} />
           </Switch>
           <Footer />

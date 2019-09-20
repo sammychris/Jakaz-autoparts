@@ -8,7 +8,14 @@
     display: flex;
     justify-content: space-between;
     .main-img {
+        text-align: left;
     	width: 50%;
+        ul {
+            text-align: left;
+            li {
+                text-align: left;
+            }
+        }
     	img {
     		display: block;
     		width: 100%;

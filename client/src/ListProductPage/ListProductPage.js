@@ -15,9 +15,10 @@ class ListProductPage extends React.Component {
 
 	componentDidMount() {
 		const { params } = this.props.match;
-		let query = '';
-		if (params.partsname) query = '?name='+params.partsname;
-		fetch('/api/product' + query)
+		let cat_id = '';
+		if (params.pname) 
+			cat_id = '/category/'+localStorage.getItem("category_id");
+		fetch('/api/product' + cat_id)
 			.then(res => res.json())
 			.then(res => {
 				this.setState({
@@ -28,12 +29,12 @@ class ListProductPage extends React.Component {
 
 	ListItems(items) {
 		return items.map(each => {
-			const { name, id } = each;
+			const { make, model, year, name, id } = each;
 			return (
 				<li>
 					<Link to={`/parts/${name}/${id}`}>
 						<img src={'/uploads/'+each.sample_photo} />
-						<span>{each.name}</span>
+						<span>{`${make} ${model} ${year} ${name}`}</span>
 					</Link>
 				</li>
 			)

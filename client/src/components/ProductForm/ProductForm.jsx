@@ -3,6 +3,7 @@ import { Route, Link } from 'react-router-dom';
 
 const productform = {
 	display: 'flex',
+	flexDirection: 'column',
 	alignItems: 'center',
 	justifyContent: 'center',
 	height: '400px',
@@ -16,19 +17,28 @@ class ProductForm extends React.Component {
 			model: '',
 			year: '',
 			name: '',
-			description: '',
+			catName: '',
+			categories: [],
 			inputFiles: [],
 		}
-		
+		this.category = {};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.uploadData = this.uploadData.bind(this);
+		this.listCategory = this.listCategory.bind(this);
 	}
 
 	componentDidMount(){
 		this.setState({
 			inputFiles: document.querySelector('input[type=file]')
 		});
+
+		fetch('/api/product/category')
+			.then(res => res.json())
+			.then(cats => {
+				console.log(cats)
+				this.setState({ categories: cats });
+			})
 	}
 
 	handleChange(e) {
@@ -39,7 +49,7 @@ class ProductForm extends React.Component {
 	uploadData(data) {
 		const formData = new FormData();
 		for(const key in data){
-			if (typeof data[key] === 'string') {
+			if (typeof data[key] === 'string' || typeof data[key] === 'number') {
 				formData.append(key, data[key]);
 			}
 			else {
@@ -54,26 +64,41 @@ class ProductForm extends React.Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		const { make, model, year, name, description, inputFiles } = this.state;
+		const { make, model, year, name, categories, catName, inputFiles } = this.state;
+		const category_id = this.category[catName];
+
 		fetch("/api/product", {
 		    method: 'POST',
 		    body: this.uploadData({
-		    	make, model, year, name, description, inputFiles
+		    	make, model, year, name, category_id, inputFiles
 		    })
 		})
 			.then(res => res.json())
 			.then(res => console.log(res))
 	}
+
+	listCategory(categories) {
+		return categories.map((a,i) => {
+			this.category[a.name] = a.id;
+			return <option key={i}>{a.name}</option>
+		});
+	}
+
 	render() {
-		const { make, model, year, name, description } = this.state;
+		const { make, model, year, name, catName, categories } = this.state;
 		return (
 			<div className="prod" style={productform}>
+				<h2>Add a product</h2>
 				<form onSubmit={this.handleSubmit} encType="multipart/form-data">
 					<div>Make: <input type="text" value={make} name="make" onChange={this.handleChange}/></div> <br/>
 					<div>Model: <input type="text" value={model} name="model" onChange={this.handleChange}/></div> <br/>
 					<div>Year: <input type="text" value={year} name="year" onChange={this.handleChange}/></div> <br/>
 					<div>Part Name: <input type="text" value={name} name="name" onChange={this.handleChange}/></div> <br/>
-					<div>Description: <input type="text" value={description} name="description" onChange={this.handleChange}/></div> <br/>
+					<div>Category: <select value={catName} name="catName" onChange={this.handleChange}>
+							<option>select a Category</option>
+							{ this.listCategory(categories) }
+						</select>
+					</div><br/>
 					<div>Photos: <input type="file" multiple/></div> <br/>
 					<div><button type="submit">Submit</button></div>
 				</form>

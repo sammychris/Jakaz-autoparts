@@ -4,7 +4,6 @@ const multer  = require('multer');
 const path    = require('path');
 const Product = require('../models/Product');
 const Photos = require('../models/Photos');
-const Category = require('../models/Category');
 
 
 const storage = multer.diskStorage({
@@ -36,7 +35,6 @@ module.exports = function (app) {
 
 	app.route('/api/product')
 		.post(upload, (req, res) => {
-			const category = {};
 		 	const new_prod = new Product(req.body);
 		  	const { files }  = req;
 
@@ -51,45 +49,36 @@ module.exports = function (app) {
 		  	// if (!files.length) {
 		  	// 	return res.status(400).json({ error:true, message: 'Please provide a photo'})
 		  	// }
+
 		  	// assign new product an id... 
 		  	const { make, model, year, name } = new_prod;
-		  	const product_id = `${make}-${model}-${name}-${generateId(5)}`; // assign id
-		  	new_prod.id = product_id;
+
+		  	new_prod.id = `${make}-${model}-${name}-${generateId(5)}`; // assign id
 		  	new_prod.sample_photo = files[0].filename;
 		  	new_prod.data = `${make} ${model} ${year} ${name}`;
 
-		  	// push the name nd photo to category
-		  	category.name = name;
-		  	category.photo = new_prod.sample_photo;
-
 		  	// map through files 
-		 	const uploads = files.map(a => [a.filename, product_id]); 
+		 	const uploads = files.map(a => [a.filename, new_prod.id]); 
 
 		  	Product.createProduct(new_prod, (err, output) => {
 			    if (err) return res.send(err);
 				Photos.upload(uploads, (err, result) => {
 					if (err) return res.send(err);
-					Category.createCategory(category, (err, cat) =>{
-						if (err) return res.send(err);
-						return res.json({ message: "Product uploaded successful!" });
-					})
+					return res.json({ message: "Product uploaded successful!" });
 				});
 			});
 		})
 
 		.get((req, res) => {
-			Product.getAll(req.query.name, (err, product) => {
+			console.log(req.query)
+			Product.getAll(req.query.category_id, (err, product) => {
 				if (err) return res.send(err);
+				console.log(product)
 				res.json(product);
 			})    
 		});
-	app.route('/api/product/cat')
-		.get((req, res) =>{
-			Category.getAll((err, categories) => {
-				if (err) return res.send(err);
-				res.json(categories);
-			})
-		});
+
+
 	app.route('/api/product/search')
 		.get((req, res) =>{
 			Product.search(req.query.data, (err, product) => {
@@ -123,29 +112,4 @@ module.exports = function (app) {
 				return res.json(product)
 			});
 		})
-		// app.route('/api/project')
-		// 	.post(upload.single('img_url'), (req, res) => {
-		// 		let { name, description, code_url, demo_url, type, skills, item } = req.body;
-		// 		//skills = [ ...skills, ...item.split(',')];
-
-		// 		let pro = new Project({
-		// 			name,
-		// 			description,
-		// 			code_url,
-		// 			demo_url,
-		// 			type,
-		// 			skills,
-		// 		})
-		// 		pro.img_url = `http://${req.headers.host}/uploads/${req.file.filename}`;
-		// 		pro.save()
-		// 			.then(project => res.redirect('/page'))
-		// 			.catch(err => res.status(401).json({ err }));
-		// 	})
-
-		// 	.get(function (req, res) {
-		// 		Project.find({})
-		// 			.then(project => res.json({ project }))
-		// 			.catch(err => res.status(400).json({ err }));
-		// 	})
-
 }

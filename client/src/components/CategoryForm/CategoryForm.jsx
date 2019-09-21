@@ -1,5 +1,7 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
+// import ReactCrop from 'react-image-crop';
+// import 'react-image-crop/lib/ReactCrop.scss';
 
 const productform = {
 	display: 'flex',
@@ -9,26 +11,21 @@ const productform = {
 	height: '400px',
 }
 
+
 class CategoryForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			make: '',
-			model: '',
-			year: '',
 			name: '',
-			description: '',
-			inputFiles: [],
+			photo: '',
 		}
-		
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.uploadData = this.uploadData.bind(this);
 	}
 
 	componentDidMount(){
 		this.setState({
-			inputFiles: document.querySelector('input[type=file]')
+			photo: document.querySelector('input[type=file]')
 		});
 	}
 
@@ -37,43 +34,40 @@ class CategoryForm extends React.Component {
 		this.setState({ [name]: value });
 	}
 
-	uploadData(data) {
-		const formData = new FormData();
-		for(const key in data){
-			if (typeof data[key] === 'string') {
-				formData.append(key, data[key]);
-			}
-			else {
-				const items = data[key].files;
-				for (const item of items) {
-					formData.append('photos',  new Blob([item]));
-				}
-			}
-		}
-		return formData;
-	};
-
 	handleSubmit(e) {
 		e.preventDefault();
-		const { make, model, year, name, description, inputFiles } = this.state;
-		fetch("/api/product", {
+		const formData = new FormData();
+		const { name, photo } = this.state;
+
+		formData.append('name', name);
+		formData.append('photo', photo.files[0]);
+
+		fetch("/api/product/category", {
 		    method: 'POST',
-		    body: this.uploadData({
-		    	make, model, year, name, description, inputFiles
-		    })
+		    body: formData
 		})
 			.then(res => res.json())
 			.then(res => console.log(res))
 	}
+
+
 	render() {
-		const { make, model, year, name, description } = this.state;
+		const { name } = this.state;
 		return (
 			<div className="prod" style={productform}>
 				<h2>Add new category</h2>
-				<form onSubmit={this.handleSubmit} encType="multipart/form-data">
-					<div>Name: <input type="text" value={name} name="name" onChange={this.handleChange}/></div> <br/>
-					<div>Sample photo: <input type="file"/></div> <br/>
-					<div><button type="submit">Submit</button></div>
+				<form onSubmit={this.handleSubmit}>
+					<div>
+						Name: <input required type="text" value={name} name="name" onChange={this.handleChange}/>
+					</div>
+					<br/>
+					<div>
+						Sample photo: <input required type="file" />
+					</div>
+					<br/>
+					<div>
+						<button type="submit">Submit</button>
+					</div>
 				</form>
 			</div>
 		);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 class Navigation extends React.Component {
@@ -11,7 +12,9 @@ class Navigation extends React.Component {
 			<div className="navigation">
 				<ul>
 					<li>Search Inventory</li>
-					<li>Map & Direction</li>
+					<Link to="/map&direction">
+						<li>Map & Direction</li>
+					</Link>
 					<li>Contact Us</li>
 				</ul>
 			</div>

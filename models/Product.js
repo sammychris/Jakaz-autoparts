@@ -9,83 +9,114 @@ var Product = function(product){
     this.name = product.name;
 };
 
-Product.createProduct = function (newProduct, result) {    
-    db.query("INSERT INTO products set ?", newProduct, function (err, res) {    
-        if(err) {
-            console.log("error: ", err);
-            result(err, null);
-        }
-        else{
-            console.log(res.insertId);
-            result(null, res.insertId);
-        }
-    });           
+Product.createProduct = function (newProduct, result) {
+    db.getConnection((err, connection) => {
+        if (err) throw err
+        connection.query("INSERT INTO products set ?", newProduct, function (err, res) {    
+            if(err) {
+                console.log("error: ", err);
+                result(err, null);
+            }
+            else{
+                console.log(res.insertId);
+                result(null, res.insertId);
+            }
+            connection.release();
+        });
+    });         
 };
 
 Product.getAll = function (cat_id, result) {
     const sql = cat_id
         ? "select * from `products` where `category_id` = '"+cat_id+"'"
         : "SELECT * FROM products";
-
-    db.query(sql, function (err, res) {
-        if(err) {
-            console.log("error: ", err);
-            result(null, err);
-        }
-        else{
-            //console.log('product : ', res);  
-            result(null, res);
-        }
-    });   
+    db.getConnection((err, connection) => {
+        if (err) throw err
+        connection.query(sql, function (err, res) {
+            if(err) {
+                console.log("error: ", err);
+                result(null, err);
+            }
+            else{
+                //console.log('product : ', res);  
+                result(null, res);
+            }
+            connection.release();
+        });   
+    });
 };
 
 Product.search = function (search, result) {
-    db.query("select * from `products` where `data` like '%"+search+"%'", function (err, res) {
-        if(err) {
-            console.log("error: ", err);
-            result(null, err);
+    const arrQ = search.split(/\s+/);
+    let query = "select * from `products` where `q` like '%"+arrQ[0]+"%'";
+    const limit = " LIMIT 10";
+    if (arrQ.length > 1)
+        for (let i = 1; i < arrQ.length; i++) {
+            query += " AND `q` LIKE '%"+arrQ[i]+"%'"
         }
-        else{
-            //console.log('product : ', res);  
-            result(null, res);
-        }
-    });   
-};
-
-Product.getById = function (productId, result) {
-    db.query("Select * from products where id = ? ", productId, function (err, res) {             
-        if(err) {
-            console.log("error: ", err);
-            result(err, null);
-        }
-        else{
-            result(null, res);
-        }
-    });   
-};
-
-Product.updateById = function(id, product, result){
-    db.query("UPDATE products SET ? WHERE id = ?", [product, id], function (err, res) {
-        if(err) {
-            console.log("error: ", err);
-            result(null, err);
-        }
-        else{
-            result(null, res);
-        }
+        
+    db.getConnection((err, connection) => {
+        if (err) throw err
+        connection.query(query+limit, function (err, res) {
+            if(err) {
+                console.log("error: ", err);
+                result(null, err);
+            }
+            else{
+                //console.log('product : ', res);  
+                result(null, res);
+            }
+            connection.release();
+        });
     }); 
 };
 
-Product.remove = function(id, result){
-    db.query("DELETE FROM products WHERE id = ?", [id], function (err, res) {
+Product.getById = function (productId, result) {
+    db.getConnection((err, connection) => {
+        if (err) throw err
+        connection.query("Select * from products where id = ? ", productId, function (err, res) {             
+            if(err) {
+                console.log("error: ", err);
+                result(err, null);
+            }
+            else{
+                result(null, res);
+            }
+            connection.release();
+        });
+    })   
+};
 
-        if(err) {
-            console.log("error: ", err);
-            result(null, err);
-        }
-        else{
-         result(null, res);
-        }
+Product.updateById = function(id, product, result){
+    db.getConnection((err, connection) => {
+        if (err) throw err
+        connection.query("UPDATE products SET ? WHERE id = ?", [product, id], function (err, res) {
+            if(err) {
+                console.log("error: ", err);
+                result(null, err);
+            }
+            else{
+                result(null, res);
+            }
+            connection.release();
+        }); 
+    });
+};
+
+Product.remove = function(id, result){
+    db.getConnection((err, connection) => {
+        if (err) throw err;
+        connection.query("DELETE FROM products WHERE id = ?", [id], function (err, res) {
+
+            if(err) {
+                console.log("error: ", err);
+                result(null, err);
+            }
+            else{
+             result(null, res);
+            }
+            connection.release();
+        });
     }); 
 };
 

@@ -1,5 +1,4 @@
 import React from 'react';
-//import { Route, Link } from 'react-router-dom';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
@@ -30,33 +29,48 @@ class ProductPage extends React.Component {
 			return (
 				<div>
                     <img src={'/uploads/'+filename}/>
-                    <p className="legend">Christopher 3</p>
                 </div>
 			)
 		})
 	 }
 
 	render() {
+		let yearStr = '';
 		const { product, photos } = this.state;
 		const { make, model, year, name  } = product;
-		return make ? (
+		if (year) yearStr = year;
+		return (
 			<div className="container">
-				<div className="product">
-					<Carousel infiniteLoop={true} autoPlay={true} className="main-img">
-		                { this.ProductPhotos(photos) }
-		            </Carousel>
-					<div className="write-up">
-						<h1>{`${make} ${model} ${year} ${name}`}</h1>
-						<div className="content">
-							<p>The main purpose</p>
-							<div>
-								Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. 
+				<div className="product-page">
+					{ make
+						? (
+							<div className="product-container">
+								<Carousel infiniteLoop={true} autoPlay={true} className="main-img">
+				                	{ this.ProductPhotos(photos) }
+					            </Carousel>
+								<div className="write-up">
+									<h1>{`${make} ${model} ${yearStr} ${name}`}</h1>
+									<div className="content">
+										<div className="car-info">
+											<div><span>Make: </span>{make}</div>
+											<div><span>Model: </span>{model}</div>
+											<div><span>Year: </span>{yearStr}</div>
+											<div><span>Name: </span>{name}</div>
+										</div>
+										<div className="details">Buy at discount prices with 60day warranty.</div>
+										<div className="details">We also ship to your door step.</div>
+										<div className="details">To Order</div>
+										<div className="details">Call: <span>+2348102578257</span></div>
+										<div className="details">Whatsapp: <span>+2349026586217</span></div>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
+						)
+						: ''
+					}
 				</div>
 			</div>
-		): '';
+		);
 	}
 }
 

@@ -5,6 +5,8 @@ import About from './About';
 import Footer from './Footer';
 import ProductForm from './ProductForm';
 import CategoryForm from './CategoryForm';
+import ListProduct from './ListProduct';
+import Search      from './Search';
 
 
 export {
@@ -15,4 +17,6 @@ export {
 	Footer,
 	ProductForm,
 	CategoryForm,
+	ListProduct,
+	Search,
 };

@@ -36,12 +36,12 @@
 					.icons { @include manage_icons }
 				}
 				.foot-navigation {
-					width: 80%;
+					width: 100%;
 					.icons { @include manage_icons }
 				}
 
 				.social {
-					width: 70%;
+					width: 100%;
 					.icons{ @include manage_icons }
 					h3 {
 						margin: 0;

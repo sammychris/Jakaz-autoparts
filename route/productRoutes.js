@@ -8,7 +8,7 @@ const Photos = require('../models/Photos');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '../client/public/uploads'));
+    cb(null, path.join(__dirname, '../uploads'));
   },
   filename: function (req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now())
@@ -55,7 +55,7 @@ module.exports = function (app) {
 
 		  	new_prod.id = `${make}-${model}-${name}-${generateId(5)}`; // assign id
 		  	new_prod.sample_photo = files[0].filename;
-		  	new_prod.data = `${make} ${model} ${year} ${name}`;
+		  	new_prod.q = `${make} ${model} ${year} ${name}`;
 
 		  	// map through files 
 		 	const uploads = files.map(a => [a.filename, new_prod.id]); 
@@ -70,10 +70,8 @@ module.exports = function (app) {
 		})
 
 		.get((req, res) => {
-			console.log(req.query)
 			Product.getAll(req.query.category_id, (err, product) => {
 				if (err) return res.send(err);
-				console.log(product)
 				res.json(product);
 			})    
 		});
@@ -81,7 +79,7 @@ module.exports = function (app) {
 
 	app.route('/api/product/search')
 		.get((req, res) =>{
-			Product.search(req.query.data, (err, product) => {
+			Product.search(req.query.q, (err, product) => {
 				if (err) return res.send(err);
 				res.json(product);
 			})

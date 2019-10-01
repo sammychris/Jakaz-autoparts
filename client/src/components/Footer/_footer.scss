@@ -1,12 +1,14 @@
 @mixin manage_icons {
 	width: 100%;
 	display: flex;
+	text-decoration: none;
 	i {
 		font-size: 30px;
 		color: #d11e1e;
 		width: 20%;
 	}
 	div {
+		color: #fff;
 		width: 80%;
 	}
 }

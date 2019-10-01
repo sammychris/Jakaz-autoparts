@@ -1,6 +1,6 @@
 import React from 'react';
-import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom';
-import { Header, Navigation, Banner, About, Footer, Search } from '../components';
+import { Link } from 'react-router-dom';
+import { Search } from '../components';
 
 
 class ListProductPage extends React.Component {
@@ -35,7 +35,7 @@ class ListProductPage extends React.Component {
 			return (
 				<li>
 					<Link to={`/parts/${name}/${id}`}>
-						<img src={'/uploads/'+each.sample_photo} />
+						<img alt="" src={'/uploads/'+each.sample_photo} />
 						<span>{`${make} ${model} ${yearStr} ${name}`}</span>
 					</Link>
 				</li>

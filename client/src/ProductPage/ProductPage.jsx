@@ -28,7 +28,7 @@ class ProductPage extends React.Component {
 			const { filename } = each;
 			return (
 				<div>
-                    <img src={'/uploads/'+filename}/>
+                    <img alt="" src={'/uploads/'+filename}/>
                 </div>
 			)
 		})

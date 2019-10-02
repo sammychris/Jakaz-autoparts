@@ -27,13 +27,13 @@ class About extends React.Component {
 	}
 
 	ListItems(items) {
-		return items.map(each => {
+		return items.map((each, i) => {
 			const { name, photo, id } = each;
 			const url = name.replace(/\s/g, '-');
 			return (
-				<li>
+				<li key={i}>
 					<Link to={'/parts/'+url} onClick={this.handle_Id(id)}>
-						<img src={'/uploads/'+photo} />
+						<img alt="" src={'/uploads/'+photo} />
 						<span>{name}</span>
 					</Link>
 				</li>

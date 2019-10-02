@@ -1,7 +1,4 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
-// import ReactCrop from 'react-image-crop';
-// import 'react-image-crop/lib/ReactCrop.scss';
 
 const productform = {
 	display: 'flex',

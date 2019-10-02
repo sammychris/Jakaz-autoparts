@@ -20,15 +20,15 @@ function Banner () {
 			</div>
             <Carousel infiniteLoop={true} autoPlay={true} showThumbs={false}>
             	<div className="banner-slide">
-                    <img src="/images/banner.jpg" />
+                    <img src="/images/banner.jpg" alt=""/>
                     <p className="legend">In Need of Any Car Parts? Please Call Us to Get Prices!</p>
                 </div>
                 <div className="banner-slide">
-                    <img src="/images/banner1.jpg" />
+                    <img src="/images/banner1.jpg" alt=""/>
                     <p className="legend">We also deliver to your door step</p>
                 </div>
                 <div className="banner-slide">
-                    <img src="/images/banner2.jpg" />
+                    <img src="/images/banner2.jpg" alt=""/>
                     <p className="legend">We also deliver to your door step</p>
                 </div>
             </Carousel>

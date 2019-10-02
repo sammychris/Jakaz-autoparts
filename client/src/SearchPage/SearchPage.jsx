@@ -1,7 +1,6 @@
 import React from 'react';
-import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom';
-import { Header, Navigation, Banner, About, Footer, Search } from '../components';
-import { ProductPage } from '../ProductPage';
+import { Link } from 'react-router-dom';
+import { Search } from '../components';
 
 
 class SearchPage extends React.Component {
@@ -31,7 +30,7 @@ class SearchPage extends React.Component {
 			return (
 				<li>
 					<Link to={`/parts/${name}/${id}`}>
-						<img src={'/uploads/'+each.sample_photo} />
+						<img alt="" src={'/uploads/'+each.sample_photo} />
 						<span>{`${make} ${model} ${year} ${name}`}</span>
 					</Link>
 				</li>

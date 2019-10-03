@@ -8,6 +8,8 @@
 	.search {
 		display: flex;
 		width: 60%;
+		box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.17);
+		border-radius: 5px;
 
 		#srchBox {
 			border: 0;
@@ -32,7 +34,7 @@
 
 	.search-items {
 		position: absolute;
-		top: 40px;
+		top: 30px;
 	    width: 60%;
 	    font-weight: bold;
 	    background: white;
@@ -70,7 +72,7 @@
 		}
 		.search-items {
 			width: 80%;
-	    	top: 30px;
+	    	top: 20px;
 
 	    	li {
 		    	padding: 5px 10px;

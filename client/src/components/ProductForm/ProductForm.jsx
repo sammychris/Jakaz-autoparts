@@ -1,5 +1,4 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
 
 const productform = {
 	display: 'flex',
@@ -64,7 +63,7 @@ class ProductForm extends React.Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		const { make, model, year, name, categories, catName, inputFiles } = this.state;
+		const { make, model, year, name, catName, inputFiles } = this.state;
 		const category_id = this.category[catName];
 
 		fetch("/api/product", {

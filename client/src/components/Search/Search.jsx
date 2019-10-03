@@ -30,7 +30,7 @@ class Search extends React.Component {
 		? (
 			<ul className="search-items">
 				{ sItems.map(each => {
-					const { name, photo, id } = each;
+					const { name, id } = each;
 					const url = name.replace(/\s/g, '-');
 					return	(
 						<Link to={ '/parts/'+url+'/'+id} >
@@ -47,7 +47,7 @@ class Search extends React.Component {
 		const { search } = this.state;
 		return (
 			<div className="search-container">
-				<form className="search" autocomplete="off" onSubmit={(e) => e.preventDefault()}>
+				<form className="search" autoComplete="off" onSubmit={(e) => e.preventDefault()}>
 					<input
 						required
 						onChange={this.handleSearch}

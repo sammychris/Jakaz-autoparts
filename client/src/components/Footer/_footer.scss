@@ -39,16 +39,29 @@
 				}
 				.foot-navigation {
 					width: 100%;
-					.icons { @include manage_icons }
+					.icons { @include manage_icons };
+					.icons:hover { 
+						div {
+							color: red;
+						}
+					};
 				}
 
 				.social {
 					width: 100%;
-					.icons{ @include manage_icons }
+					.icons{ @include manage_icons };
+
+					.icons:hover { 
+						div {
+							color: red;
+						}
+					};
+
 					h3 {
 						margin: 0;
 					}
 				}
+
 			}
 		}
 

@@ -1,5 +1,5 @@
 import React from 'react';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 function Footer() {
@@ -28,18 +28,18 @@ function Footer() {
 					</div>
 					<div className="holder">
 						<div className="foot-navigation">
-							<div className="icons">
+							<Link to="/parts" className="icons">
 								<i className="fas fa-search-plus"></i>
 								<div>Car Parts</div>
-							</div>
-							<div className="icons">
+							</Link>
+							<Link to="/map&direction" className="icons">
 								<i className="fas fa-map-marker"></i>
 								<div>Map & Direction</div>
-							</div>
-							<div className="icons">
+							</Link>
+							<Link to="/contact" className="icons">
 								<i className="fas fa-envelope"></i>
 								<div>Contact Us</div>
-							</div>
+							</Link>
 						</div>
 					</div>
 					<div className="holder">

@@ -1,4 +1,14 @@
 
+.product-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 200px;
+    width: 100%;
+    background:  #fff;//#f5f5f5;
+    z-index: 10;
+}
+
 .product-page {
 	width: 80%;
     max-width: 1000px;

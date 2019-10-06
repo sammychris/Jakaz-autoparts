@@ -1,7 +1,7 @@
 import React from 'react';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
-
+import { LoadIcon } from '../components';
 
 class ProductPage extends React.Component {
 	constructor(props) {
@@ -66,7 +66,7 @@ class ProductPage extends React.Component {
 								</div>
 							</div>
 						)
-						: ''
+						: <LoadIcon />
 					}
 				</div>
 			</div>

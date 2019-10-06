@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Search } from '../components';
+import { Search, LoadIcon } from '../components';
 
 
 class ListProductPage extends React.Component {
@@ -41,7 +41,7 @@ class ListProductPage extends React.Component {
 				</li>
 			)
 		})
-		: '';
+		: <LoadIcon />;
 
 	}
 
@@ -64,7 +64,7 @@ class ListProductPage extends React.Component {
 						<ul>
 							{ this.ListItems(items) }
 							<div className="seemore-container">
-								<a href="/parts" class="seemore-container_link">See More Parts</a>
+								<Link to="/parts" className="seemore-container_link">See More Parts</Link>
 							</div>
 						</ul>
 

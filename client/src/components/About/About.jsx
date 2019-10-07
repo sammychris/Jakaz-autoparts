@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LoadIcon from '../LoadIcon';
 
 
 class About extends React.Component {
@@ -65,7 +66,10 @@ class About extends React.Component {
 				<div className="items">
 					<div id="title">We have any part of any Vehicle</div>
 					<ul>
-						{ items[0] && this.ListItems(items) }
+						{ items[0]
+							? this.ListItems(items)
+							: <LoadIcon />
+						}
 						<div className="seemore-container">
 							<a href="/parts" className="seemore-container_link">See All Parts</a>
 						</div>

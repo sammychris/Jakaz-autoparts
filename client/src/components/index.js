@@ -6,7 +6,8 @@ import Footer from './Footer';
 import ProductForm from './ProductForm';
 import CategoryForm from './CategoryForm';
 import Search      from './Search';
-
+import FirstLoading      from './FirstLoading';
+import LoadIcon      from './LoadIcon';
 
 export {
 	Header,
@@ -17,4 +18,6 @@ export {
 	ProductForm,
 	CategoryForm,
 	Search,
+	FirstLoading,
+	LoadIcon,
 };

@@ -35,7 +35,6 @@ class ProductForm extends React.Component {
 		fetch('/api/product/category')
 			.then(res => res.json())
 			.then(cats => {
-				console.log(cats)
 				this.setState({ categories: cats });
 			})
 	}
@@ -73,7 +72,7 @@ class ProductForm extends React.Component {
 		    })
 		})
 			.then(res => res.json())
-			.then(res => console.log(res))
+			.then(res => alert(res))
 	}
 
 	listCategory(categories) {
@@ -86,20 +85,29 @@ class ProductForm extends React.Component {
 	render() {
 		const { make, model, year, name, catName, categories } = this.state;
 		return (
-			<div className="prod" style={productform}>
-				<h2>Add a product</h2>
+			<div className="contact-page" style={productform}>
+				<h2>Add Product</h2>
 				<form onSubmit={this.handleSubmit} encType="multipart/form-data">
-					<div>Make: <input type="text" required value={make} name="make" onChange={this.handleChange}/></div> <br/>
-					<div>Model: <input type="text" required value={model} name="model" onChange={this.handleChange}/></div> <br/>
-					<div>Year: <input type="text" value={year} name="year" onChange={this.handleChange}/></div> <br/>
-					<div>Part Name: <input type="text" required value={name} name="name" onChange={this.handleChange}/></div> <br/>
-					<div>Category: <select value={catName} required name="catName" onChange={this.handleChange}>
+					<div className="row1">
+						<input placeholder="Enter Make (required)" type="text" required value={make} name="make" onChange={this.handleChange}/>
+						<input placeholder="Enter Model (required)" type="text" required value={model} name="model" onChange={this.handleChange}/>
+					</div>
+					<div className="row1">
+						<input placeholder="Enter Year" type="text" value={year} name="year" onChange={this.handleChange}/>
+						<input placeholder="Enter Part Name (required)" type="text" required value={name} name="name" onChange={this.handleChange}/>
+					</div>
+					<div className="row3">
+						<select value={catName} required name="catName" onChange={this.handleChange}>
 							<option value="">select a Category</option>
 							{ this.listCategory(categories) }
 						</select>
-					</div><br/>
-					<div>Photos: <input type="file" multiple/></div> <br/>
-					<div><button type="submit">Submit</button></div>
+					</div>
+					<div className="row2">
+						Photos: <input type="file" multiple placeholder="required"/>
+					</div>
+					<div className="row3">
+						<button type="submit">Submit</button>
+					</div>
 				</form>
 			</div>
 		);

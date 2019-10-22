@@ -8,7 +8,7 @@ class AdminPage extends React.Component {
 		super(props);
 		this.state = {
 			pform: true,
-			prodMessage: "Add a product",
+			prodMessage: "Add new product",
 			catMessage: "Add new category",
 		}
 		this.controlForm = this.controlForm.bind(this);
@@ -23,7 +23,7 @@ class AdminPage extends React.Component {
 		return (
 			<div className="container">
 				<div className="admin-section">
-					<div>
+					<div className="select">
 						<button onClick={this.controlForm}>
 							{ pform ? catMessage: prodMessage }
 						</button>

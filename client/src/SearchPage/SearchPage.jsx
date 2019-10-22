@@ -23,14 +23,16 @@ const HandleDisplay = (props) => {
 
 
 const ListItems = (props) => {
+	let yearStr = '';
 	const { items } = props;
 	return items.map(each => {
 		const { make, model, year, name, id } = each;
+		if (year) yearStr = year;
 		return (
 			<li>
 				<Link to={`/parts/${name}/${id}`}>
 					<img alt="" src={'/uploads/'+each.sample_photo} />
-					<span>{`${make} ${model} ${year} ${name}`}</span>
+					<span>{`${make} ${model} ${yearStr} ${name}`}</span>
 				</Link>
 			</li>
 		)

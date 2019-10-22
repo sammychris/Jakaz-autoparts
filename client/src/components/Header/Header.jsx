@@ -20,8 +20,8 @@ function Header() {
 						<div>Ladipo (OSHODI, LAGOS)</div>
 					</div>
 					<div className="contact">
-						<div><span>Phone:</span> +2349026586217</div>
-						<div><span>Whatsapp:</span> +2348102578257</div>
+						<div><span>Phone:</span> +2348102578257</div>
+						<div><span>Whatsapp:</span> +2349026586217</div>
 					</div>
 					<div className="time">
 						<div><span>Business Hours</span></div>

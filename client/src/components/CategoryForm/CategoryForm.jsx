@@ -44,25 +44,22 @@ class CategoryForm extends React.Component {
 		    body: formData
 		})
 			.then(res => res.json())
-			.then(res => console.log(res))
+			.then(res => alert(res))
 	}
 
 
 	render() {
 		const { name } = this.state;
 		return (
-			<div className="prod" style={productform}>
-				<h2>Add new category</h2>
+			<div className="contact-page" style={productform}>
+				<h2>Add New Category</h2>
 				<form onSubmit={this.handleSubmit}>
-					<div>
-						Name: <input required type="text" value={name} name="name" onChange={this.handleChange}/>
+					<div className="row1">
+						<input required placeholder="Name of Category" type="text" value={name} name="name" onChange={this.handleChange}/>
+						<input required type="file"  placeholder="Sample Photo for category"/>
 					</div>
 					<br/>
-					<div>
-						Sample photo: <input required type="file" />
-					</div>
-					<br/>
-					<div>
+					<div className="row3">
 						<button type="submit">Submit</button>
 					</div>
 				</form>

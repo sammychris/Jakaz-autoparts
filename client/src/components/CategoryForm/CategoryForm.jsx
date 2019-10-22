@@ -55,7 +55,7 @@ class CategoryForm extends React.Component {
 				<h2>Add New Category</h2>
 				<form onSubmit={this.handleSubmit}>
 					<div className="row1">
-						<input required placeholder="Name of Category" type="text" value={name} name="name" onChange={this.handleChange}/>
+						<input required placeholder="Name of Category (required)" type="text" value={name} name="name" onChange={this.handleChange}/>
 						<input required type="file"  placeholder="Sample Photo for category"/>
 					</div>
 					<br/>

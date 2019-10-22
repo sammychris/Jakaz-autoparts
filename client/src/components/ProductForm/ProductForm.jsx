@@ -98,7 +98,7 @@ class ProductForm extends React.Component {
 					</div>
 					<div className="row3">
 						<select value={catName} required name="catName" onChange={this.handleChange}>
-							<option value="">select a Category</option>
+							<option value="">Select A Category</option>
 							{ this.listCategory(categories) }
 						</select>
 					</div>
